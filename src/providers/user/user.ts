@@ -129,7 +129,7 @@ export class User {
   logout(nav) {
     this._user = null;
     this.storage.remove('usr');
-    
+     
     //nav.popTo(nav.first());
     nav.setRoot('LoginPage');
     nav.popToRoot();
