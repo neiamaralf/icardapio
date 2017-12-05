@@ -1,7 +1,5 @@
 # iCardapio
 
-_Note: the Ionic Super Starter requires Ionic CLI 3._
-
 <img src="resources/icon.png" width="400" />
 
 The Ionic Super Starter is a batteries-included starter project for Ionic apps complete with pre-built pages, providers, and best practices for Ionic development.
