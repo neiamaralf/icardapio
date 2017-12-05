@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, MenuController, NavController, Platform } from 'ionic-angular';
+import { IonicPage, MenuController, NavController, Platform,ModalController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
+import { LoginPage } from '../login/login';
+import { User } from '../../providers/providers';
+import { Settings } from '../../providers/providers';
+import { MainPage } from '../../pages/pages';
 
 export interface Slide {
   title: string;
@@ -19,7 +23,18 @@ export class TutorialPage {
   showSkip = true;
   dir: string = 'ltr';
 
-  constructor(public navCtrl: NavController, public menu: MenuController, translate: TranslateService, public platform: Platform) {
+  dontshow=false;
+
+  showtut(){
+    console.log(this.dontshow);
+    this.settings.setValue('option1',!this.dontshow);
+    console.log(this.settings);
+
+  }
+
+  constructor(public navCtrl: NavController, public menu: MenuController, translate: TranslateService, public platform: Platform,
+    public modalCtrl:ModalController,public user: User,public settings: Settings) {
+     
     this.dir = platform.dir();
     translate.get(["TUTORIAL_SLIDE1_TITLE",
       "TUTORIAL_SLIDE1_DESCRIPTION",
@@ -51,10 +66,7 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.navCtrl.setRoot('WelcomePage', {}, {
-      animate: true,
-      direction: 'forward'
-    });
+    LoginPage.showlogin(this.modalCtrl);
   }
 
   onSlideChangeStart(slider) {
@@ -62,7 +74,7 @@ export class TutorialPage {
   }
 
   ionViewDidEnter() {
-    // the root left menu should be disabled on the tutorial page
+
     this.menu.enable(false);
   }
 

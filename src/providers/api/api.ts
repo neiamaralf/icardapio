@@ -1,16 +1,18 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, RequestOptions,Headers, URLSearchParams } from '@angular/http';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  url: string = 'http://www.athena3d.com.br/icardapio';
+  options:any;
 
   constructor(public http: Http) {
+    this.options = new RequestOptions({ headers: new Headers({ 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8" }) });
   }
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
@@ -32,12 +34,12 @@ export class Api {
     return this.http.get(this.url + '/' + endpoint, options);
   }
 
-  post(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.post(this.url + '/' + endpoint, body, options);
+  post(endpoint: string, body: any) {
+    return this.http.post(this.url + '/post.php', body, this.options);
   }
 
-  put(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.url + '/' + endpoint, body, options);
+  put(endpoint: string, body: any,) {
+    return this.http.put(this.url + '/put.php', body, this.options);
   }
 
   delete(endpoint: string, options?: RequestOptions) {

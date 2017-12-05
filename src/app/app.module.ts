@@ -14,6 +14,8 @@ import { Items } from '../mocks/providers/items';
 import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
+import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 import { MyApp } from './app.component';
 
 // The translate loader needs to know where to load i18n files
@@ -39,7 +41,8 @@ export function provideSettings(storage: Storage) {
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,    
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -53,10 +56,12 @@ export function provideSettings(storage: Storage) {
     }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
-  ],
+  ], 
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    
+    SignupPage
   ],
   providers: [
     Api,

@@ -1,70 +1,121 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-
+import {ToastController,ModalController} from 'ionic-angular';
 import { Api } from '../api/api';
+import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
 
-/**
- * Most apps have the concept of a User. This is a simple provider
- * with stubs for login/signup/etc.
- *
- * This User provider makes calls to our API at the `login` and `signup` endpoints.
- *
- * By default, it expects `login` and `signup` to return a JSON object of the shape:
- *
- * ```json
- * {
- *   status: 'success',
- *   user: {
- *     // User fields your app needs, like "id", "name", "email", etc.
- *   }
- * }
- * ```
- *
- * If the `status` field is not `success`, then an error is detected and returned.
- */
+import { MainPage,FirstRunPage } from '../../pages/pages';
+
 @Injectable()
 export class User {
-  _user: any;
+  private loginErrorString: string;
+  _user: any=null;// {id: null,nome: null,token:null};
 
-  constructor(public http: Http, public api: Api) {
+  constructor(public storage: Storage,
+    public translateService: TranslateService,
+    public toastCtrl: ToastController,
+    public http: Http, 
+    public api: Api,
+    public modalCtrl:ModalController) {
+    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
+      this.loginErrorString = value;
+    });
+    this.loadsusr();
   }
 
-  /**
-   * Send a POST request to our login endpoint with the data
-   * the user entered on the form.
-   */
-  login(accountInfo: any) {
-    let seq = this.api.post('login', accountInfo).share();
+  loadsusr(){
+    this.storage.ready().then(() => {
+      this.storage.get('usr').then((usr) => {
+        this._user=JSON.parse(usr);
+        console.log(this._user);
+        //console.log(this._user.nome);
+        //this.verifytoken(this);
 
-    seq
-      .map(res => res.json())
+      });
+    });
+
+  }
+
+  saveusr(){    
+    this.storage.ready().then(() => {
+      this.storage.set('usr', JSON.stringify(this._user));
+      this.loadsusr();
+    });
+  }
+
+  isLogged(){
+
+  }
+
+  login(modalctrl:any,loginpage:any,accountInfo: any) {
+    this.api.post('login', accountInfo)
+    .map(res => res.json())
       .subscribe(res => {
-        // If the API returned a successful response, mark the user as logged in
         if (res.status == 'success') {
+          //modalctrl.dismiss();
+          loginpage.navCtrl.setRoot(MainPage);
+          loginpage.navCtrl.popToRoot();
+          console.log(this._user);
           this._loggedIn(res);
+          console.log(this._user);
         } else {
-        }
+          let toast = this.toastCtrl.create({
+            message: res.msg,
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();          
+        }        
       }, err => {
-        console.error('ERROR', err);
+        console.error('ERROR', err);               
       });
-
-    return seq;
   }
 
-  /**
-   * Send a POST request to our signup endpoint with the data
-   * the user entered on the form.
-   */
+  verifytoken(app:any){
+    if (app.user._user != null) {
+      this.api.post('login', { key: 'asserttoken', id: app.user._user.id, token: app.user._user.token })
+        .map(res => res.json())
+        .subscribe(res => {
+          if (res.status == 'success') {
+            console.log(this._user);
+            this._loggedIn(res);
+            app.rootPage = MainPage;
+
+            console.log(this._user);
+          } else {
+            let toast = this.toastCtrl.create({
+              message: res.msg,
+              duration: 3000,
+              position: 'top'
+            });
+            toast.present();
+            if (app.settings.settings.option1 == false) {
+              app.rootPage = 'LoginPage';
+            }
+            else app.rootPage = FirstRunPage;
+          }
+        }, err => {
+          console.error('ERROR', err);
+        });
+    }
+    else{
+      if (app.settings.settings.option1 == false) {
+        app.rootPage = 'LoginPage';
+      }
+      else app.rootPage = FirstRunPage;
+    }
+
+  }
+  
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+    let seq = this.api.put('signup', accountInfo).share();
 
     seq
       .map(res => res.json())
       .subscribe(res => {
-        // If the API returned a successful response, mark the user as logged in
         if (res.status == 'success') {
           this._loggedIn(res);
         }
@@ -75,17 +126,17 @@ export class User {
     return seq;
   }
 
-  /**
-   * Log the user out, which forgets the session
-   */
-  logout() {
+  logout(nav) {
     this._user = null;
+    this.storage.remove('usr');
+    
+    //nav.popTo(nav.first());
+    nav.setRoot('LoginPage');
+    nav.popToRoot();
   }
 
-  /**
-   * Process a login/signup response to store user data
-   */
   _loggedIn(resp) {
     this._user = resp.user;
+    this.saveusr();
   }
 }

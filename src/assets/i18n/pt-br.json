@@ -5,33 +5,37 @@
     "EMAIL": "Email",
     "USERNAME": "Nome de Usuário",
     "PASSWORD": "Senha",
+    "PASSWORD_CONFIRMATION": "Confirmação Senha",
     "LOGIN": "Entrar",
     "SIGNUP": "Cadastre-se",
 
     "TAB1_TITLE": "Itens",
     "TAB2_TITLE": "Busca",
     "TAB3_TITLE": "Configurações",
+    "SHOW": "Mostrar",
+    "HIDE": "Ocultar",
 
     "MAP_TITLE": "Mapa",
 
     "TUTORIAL_SKIP_BUTTON": "Pular",
     "TUTORIAL_CONTINUE_BUTTON": "Continuar",
+    "TUTORIAL_DONT_SHOW_AGAIN": "Não mostar novamente",
 
-    "TUTORIAL_SLIDE1_TITLE": "Bem-vindo ao Ionic Super Starter",
-    "TUTORIAL_SLIDE1_DESCRIPTION": "O <b>Ionic Super Starter</b> é um starter para Ionic completo, com diversos componentes e páginas prontas para ser utilizado como guia de melhores práticas.",
+    "TUTORIAL_SLIDE1_TITLE": "Bem-vindo ao iCardapio",
+    "TUTORIAL_SLIDE1_DESCRIPTION": "O <b>iCardapio</b> é um aplicativo .",
 
-    "TUTORIAL_SLIDE2_TITLE": "Como utilizar o Super Starter",
-    "TUTORIAL_SLIDE2_DESCRIPTION": "Combine os tipos de páginas que você quer e remova aquelas que não precisa. No starter existem muitos casos de uso comuns de layouts e páginas como login, cadastro, abas e de tutorial.",
+    "TUTORIAL_SLIDE2_TITLE": "Como utilizar o iCardapio",
+    "TUTORIAL_SLIDE2_DESCRIPTION": ".",
 
     "TUTORIAL_SLIDE3_TITLE": "Iniciando o projeto",
-    "TUTORIAL_SLIDE3_DESCRIPTION": "Precisa de ajuda? Dê uma olhada no README do Super Starter para um tutorial completo",
+    "TUTORIAL_SLIDE3_DESCRIPTION": "Precisa de ajuda? Dê uma olhada no README do iCardapio para um tutorial completo",
 
     "TUTORIAL_SLIDE4_TITLE": "Pronto para Usar?",
 
     "WELCOME_INTRO": "Bem vindo ao melhor app de cardápio!!!",
 
     "SETTINGS_TITLE": "Configurações",
-    "SETTINGS_OPTION1": "Opção 1",
+    "SETTINGS_OPTION1": "Mostrar tutorial",
     "SETTINGS_OPTION2": "Opção 2",
     "SETTINGS_OPTION3": "Opção 3",
     "SETTINGS_OPTION4": "Opção 4",
@@ -49,7 +53,7 @@
     "SIGNUP_ERROR": "Não foi possível criar sua conta. Verifique seus dados e tente novamente.",
     "SIGNUP_BUTTON": "Cadastre-se",
 
-    "LIST_MASTER_TITLE": "Itens",
+    "LIST_MASTER_TITLE": "Produtos",
 
     "ITEM_CREATE_TITLE": "Novo Item",
     "ITEM_CREATE_CHOOSE_IMAGE": "Adicionar Imagem",

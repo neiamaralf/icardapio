@@ -19,6 +19,7 @@ export class Settings {
 
   load() {
     return this.storage.get(this.SETTINGS_KEY).then((value) => {
+      console.log(value);
       if (value) {
         this.settings = value;
         return this._mergeDefaults(this._defaults);
